@@ -1,0 +1,25 @@
+{
+  "name": "api_tutorial",
+  "version": "1.0.0",
+  "description": "Node.js based REST API",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cchane4/API_Tutorial.git"
+  },
+  "author": "Chad Chaney",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cchane4/API_Tutorial/issues"
+  },
+  "homepage": "https://github.com/cchane4/API_Tutorial#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "morgan": "^1.9.0",
+    "nodemon": "^1.18.3"
+  }
+}
