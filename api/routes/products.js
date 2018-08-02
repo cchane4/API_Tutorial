@@ -1,6 +1,9 @@
 const express = require('express'); 
 // can now use this to register routes
 const router = express.Router(); 
+const mongoose = require('mongoose'); 
+
+const Product = require('../models/product'); 
 
 router.get('/',(req, res, next) => { 
     res.status(200).json({ 
@@ -9,10 +12,18 @@ router.get('/',(req, res, next) => {
 }); 
 
 router.post('/',(req, res, next) => { 
-    const product = { 
+    
+    const product = new Product({ 
+        _id: new mongoose.Types.ObjectId(), 
         name: req.body.name, 
         price: req.body.price
-    };
+    }); 
+    product
+    .save()
+    .then(result => {
+        console.log(result); 
+    }) 
+    .catch(err => console.log(err));
     res.status(201).json({ 
         message: 'Handling POST request to /products',
         createdProduct: product
@@ -20,19 +31,18 @@ router.post('/',(req, res, next) => {
 }); 
 
 router.get('/:productId',(req, res, next) => { 
-    const id = req.params.productId; 
-    if (id === 'special'){ 
-        res.status(200).json({
-            message: 'You discovered the special ID',
-            id: id
-        }); 
-    } else { 
-        res.status(200).json({ 
-            message: 'You passed in an ID'
-        }); 
-    }
-    });
-
+    const id = req.params.productId;
+    Product.findById(id)
+        .exec()
+        .then(doc => { 
+            console.log(doc); 
+            res.status(200).json(doc); 
+        })
+        .catch(err => console.log(err));
+        console.log(err); 
+        res.status(500).json({error: err} ); 
+});  
+    
     router.patch('/:productId',(req, res, next) => { 
         res.status(200).json({ 
             message: 'Update product!'

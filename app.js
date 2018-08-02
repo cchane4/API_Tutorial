@@ -2,11 +2,23 @@ const express = require('express');
 const app = express(); 
 const morgan = require('morgan'); 
 const bodyParser = require('body-parser'); 
+const mongoose = require('mongoose'); 
 
 const productRoutes = require('./api/routes/products'); 
 const orderRoutes = require('./api/routes/orders'); 
+
+mongoose.connect("mongodb://localhost/node-rest-shop", function(error){
+    if (error) {
+      console.log(error);
+    }
+    else{
+      console.log("mongoose connection is successful");
+    }
+  });
+
 // used to log messages through morgan middleware
 app.use(morgan('dev')); 
+
 app.use(bodyParser.urlencoded({ extended: false})); 
 app.use(bodyParser.json()); 
 // handling CORS issues 
