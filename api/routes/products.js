@@ -22,12 +22,17 @@ router.post('/',(req, res, next) => {
     .save()
     .then(result => {
         console.log(result); 
+       /* res.status(201).json({ 
+            message: 'Handling POST request to /products',
+            createdProduct: result
+        });*/
     }) 
-    .catch(err => console.log(err));
-    res.status(201).json({ 
-        message: 'Handling POST request to /products',
-        createdProduct: product
-    });
+    .catch(err => console.log(err)); 
+        res.status(201).json({ 
+            message: 'Handling POST request to /products',
+            createdProduct: product
+        }); 
+    
 }); 
 
 router.get('/:productId',(req, res, next) => { 
@@ -40,8 +45,9 @@ router.get('/:productId',(req, res, next) => {
         })
         .catch(err => console.log(err));
         console.log(err); 
-        res.status(500).json({error: err} ); 
-});  
+        res.status(500).json({error: err}); 
+    }); 
+});
     
     router.patch('/:productId',(req, res, next) => { 
         res.status(200).json({ 
