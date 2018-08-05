@@ -1,5 +1,4 @@
-const http = require('http'); 
-const express = require('express'); 
+const http = require('http');  
 const app = require('./app'); 
 
 //using a port that is a set port via environment variable or 3000

@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 const productRoutes = require('./api/routes/products'); 
 const orderRoutes = require('./api/routes/orders'); 
 
-mongoose.connect("mongodb://heroku_111stg54:1rfjauuv3lhcc4rtp2r8fi0e2q@ds239648.mlab.com:39648/heroku_111stg54", function(error){
+mongoose.connect("mongodb://heroku_111stg54:1rfjauuv3lhcc4rtp2r8fi0e2q@ds239648.mlab.com:39648/heroku_111stg54",{ useNewUrlParser: true },function(error){
     if (error) {
       console.log(error);
     }
@@ -43,7 +43,7 @@ app.use(( req, res, next) => {
     const error = new Error( 'not found'); 
     error.status = 404; 
     next(error); 
-})
+});
 
 app.use((error, req, res, next) => { 
     res.status(error.status || 500); 

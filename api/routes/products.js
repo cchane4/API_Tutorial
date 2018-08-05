@@ -22,31 +22,31 @@ router.post('/',(req, res, next) => {
     .save()
     .then(result => {
         console.log(result); 
-       /* res.status(201).json({ 
-            message: 'Handling POST request to /products',
-            createdProduct: result
-        });*/
-    }) 
-    .catch(err => console.log(err)); 
         res.status(201).json({ 
-            message: 'Handling POST request to /products',
-            createdProduct: product
-        }); 
-    
+        message: 'Handling POST request to /products',
+        createdProduct: result
+    });
+   })
+    .catch(err => { 
+    console.log(err);
+    res.status(500).json({ 
+        error: err
+    });
 }); 
+})
 
 router.get('/:productId',(req, res, next) => { 
     const id = req.params.productId;
     Product.findById(id)
         .exec()
         .then(doc => { 
-            console.log(doc); 
+            console.log("From database",doc); 
             res.status(200).json(doc); 
         })
-        .catch(err => console.log(err));
-        console.log(err); 
-        res.status(500).json({error: err}); 
-    }); 
+        .catch(err => { 
+          console.log(err); 
+          res.status(500).json({error: err}); 
+    });  
 });
     
     router.patch('/:productId',(req, res, next) => { 
