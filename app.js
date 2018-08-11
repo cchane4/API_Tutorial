@@ -7,6 +7,8 @@ const mongoose = require('mongoose');
 const productRoutes = require('./api/routes/products'); 
 const orderRoutes = require('./api/routes/orders'); 
 
+mongoose.Promise = global.Promise; 
+
 mongoose.connect("mongodb://heroku_111stg54:1rfjauuv3lhcc4rtp2r8fi0e2q@ds239648.mlab.com:39648/heroku_111stg54",{ useNewUrlParser: true },function(error){
     if (error) {
       console.log(error);
