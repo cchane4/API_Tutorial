@@ -20,6 +20,8 @@ mongoose.connect("mongodb://heroku_111stg54:1rfjauuv3lhcc4rtp2r8fi0e2q@ds239648.
 
   mongoose.Promise = global.Promise; 
 
+  app.use('/uploads', express.static('uploads'));
+
 // used to log messages through morgan middleware
 app.use(morgan('dev')); 
 
