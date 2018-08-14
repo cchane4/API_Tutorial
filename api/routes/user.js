@@ -3,9 +3,9 @@ const router = express.Router();
 const mongoose = require('mongoose'); 
 const bcrypt = require('bcrypt'); 
 const jwt = require('jsonwebtoken'); 
-const dotenv = require("dotenv").config(); 
+//const dotenv = require("dotenv").config(); 
 
-const User = require('../models/User'); 
+const User = require('../models/user'); 
 
 router.post('/signup',( req, res, next ) => { 
     User.find({ email: req.body.email})
@@ -29,7 +29,8 @@ router.post('/signup',( req, res, next ) => {
                               password: hash
           
                       });
-                      user.save()
+                      user
+                      .save()
                       .then(result => { 
                           console.log(result); 
                           res.status(201).json({ 
@@ -45,7 +46,7 @@ router.post('/signup',( req, res, next ) => {
                   }
              });
         }
-    })    
+    });    
 }); 
 
 
@@ -89,7 +90,7 @@ router.post('/login', (req, res, next) => {
         res.status(500).json({ 
            error: err 
         });
-    })
+    });
 }); 
 
 router.delete('/:userId', (req, res, next) => { 
