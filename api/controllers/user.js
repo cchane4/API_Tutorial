@@ -1,6 +1,10 @@
+//require mongoose 
 const mongoose = require('mongoose'); 
+//required to hashing a user password or to make it unreadable
 const bcrypt = require('bcrypt'); 
+//required to allow a user to login with secret key
 const jwt = require('jsonwebtoken'); 
+//requiring the user model
 const User = require('../models/user'); 
 
 exports.user_signup = ( req, res, next ) => { 
@@ -45,6 +49,9 @@ exports.user_signup = ( req, res, next ) => {
     });    
 }
 
+//user login logic the app finds a user in the database that corresponds with user information entered
+//if the length of the user array in the database is less than 1 or if no user with the corresponding email exists 
+//then the authentication failed 
 exports.user_login = (req, res, next) => { 
     User.find({ email: req.body.email })
     .exec()
@@ -54,12 +61,15 @@ exports.user_login = (req, res, next) => {
                 message: "Auth failed"
             }); 
         }
+        //compares the password entered with the stored password for a certain user 
+        // if the comparison fails send a message that the authorization failed
         bcrypt.compare(req.body.password, user[0].password, (err, result) => {
             if (err){ 
                 return res.status(401).json({ 
                     message: 'Auth failed'
                 });
             }
+            //if the comparison passed then allow the user to be logged in for an hour
             if (result) { 
                 const token = jwt.sign({ 
                     email: user[0].email,
@@ -80,6 +90,7 @@ exports.user_login = (req, res, next) => {
            });
         }); 
     })
+    //callback catches any other errors and logs it in the terminal
     .catch(err => { 
         console.log(err); 
         res.status(500).json({ 
@@ -88,6 +99,7 @@ exports.user_login = (req, res, next) => {
     });
 }  
 
+//delete a user logic 
 exports.user_delete = (req, res, next) => { 
     User.remove({ _id: req.params.userId})
     .exec()

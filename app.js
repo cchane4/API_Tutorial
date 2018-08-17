@@ -1,15 +1,19 @@
+//require express package for building the server
 const express = require('express'); 
 const app = express(); 
+//for logging errors 
 const morgan = require('morgan'); 
+// for parsing data into information that this node application can read
 const bodyParser = require('body-parser'); 
+// for database modeling
 const mongoose = require('mongoose'); 
-
+// import all route files 
 const productRoutes = require('./api/routes/products'); 
 const orderRoutes = require('./api/routes/orders'); 
 const userRoutes = require('./api/routes/user');
 
 mongoose.Promise = global.Promise; 
-
+// make a connection to the mongo database
 mongoose.connect("mongodb://heroku_111stg54:1rfjauuv3lhcc4rtp2r8fi0e2q@ds239648.mlab.com:39648/heroku_111stg54",{ useNewUrlParser: true },function(error){
     if (error) {
       console.log(error);
@@ -28,6 +32,7 @@ app.use(morgan('dev'));
 
 app.use(bodyParser.urlencoded({ extended: false})); 
 app.use(bodyParser.json()); 
+
 // handling CORS issues 
 app.use((req, res, next) => { 
     res.header('Access-Control-Allow-Origin', 
